@@ -22,3 +22,10 @@ yarn-error.log*
 
 # webpack dist
 /public/outputs
+
+# Visual code metadata
+.vscode
+.vs
+
+#Sonar static code analysis
+.sonarlint

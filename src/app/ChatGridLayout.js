@@ -194,7 +194,7 @@ class ChatGridLayout extends React.Component {
 
     return (
       <div>
-        <ButtonAppBar username={this.state.username} />
+        <ButtonAppBar icon={this.state.icon} username={this.state.username} />
         <Grid container className={classes.root} spacing={24}>
           <Grid item xs={8} sm={3}>
             <ContactList
