@@ -32,8 +32,12 @@ app.get("/signup", function(req, res) {
 });
 
 app.get("/chatroom", function(req, res) {
-  console.log("redirect to: chatroom");
+  console.log("Redirect to: chatroom");
   res.sendFile(path.join(__dirname, "./public/chatroom.html"));
+});
+app.get("/profile", function(req, res) {
+  console.log("Redirect to: profile");
+  res.sendFile(path.join(__dirname, "./public/editProfile.html"));
 });
 
 app.get("/redirect", function(req, res) {

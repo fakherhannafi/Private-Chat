@@ -38,7 +38,7 @@ class ButtonAppBar extends React.Component {
             >
               {this.props.username}
             </Typography>
-            <LongMenu />{" "}
+            <LongMenu user={this.props} />{" "}
           </Toolbar>
         </AppBar>
       </div>

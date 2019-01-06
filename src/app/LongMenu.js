@@ -9,8 +9,15 @@ const options = ["Modifier Profil", "Sécurité", "Déconnexion"];
 const ITEM_HEIGHT = 48;
 
 class LongMenu extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     anchorEl: null
+  };
+  componentWillMount = () => {
+    console.log(this.props);
   };
 
   handleClick = event => {
@@ -18,6 +25,7 @@ class LongMenu extends React.Component {
   };
 
   handleClose = () => {
+    window.location = "/profile";
     this.setState({ anchorEl: null });
   };
   logout = e => {
