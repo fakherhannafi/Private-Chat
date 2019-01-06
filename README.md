@@ -1,7 +1,6 @@
 # Chat Test
 
 > Live chatroom built with Socket.io, React, MongoDB, Express and Node.js.
-I didn't start this project from scratch (3 hours could not do all this :p)
 
 # Features required :
 
