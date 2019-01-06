@@ -24,20 +24,13 @@ class ButtonAppBar extends React.Component {
   constructor(props) {
     super(props);
   }
-  logout = e => {
-    var retrievedObject = sessionStorage.clear();
-    if (retrievedObject == null) {
-      window.alert("Se déconnecter...");
-      window.location = "/login";
-    }
-  };
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <LongMenu />
             <Typography
               variant="title"
               color="inherit"
@@ -45,9 +38,7 @@ class ButtonAppBar extends React.Component {
             >
               {this.props.username}
             </Typography>
-            <Button color="inherit" onClick={e => this.logout(e)}>
-              Déconnexion
-            </Button>
+            <LongMenu />{" "}
           </Toolbar>
         </AppBar>
       </div>

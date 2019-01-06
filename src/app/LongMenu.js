@@ -20,7 +20,13 @@ class LongMenu extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-
+  logout = e => {
+    var retrievedObject = sessionStorage.clear();
+    if (retrievedObject == null) {
+      window.alert("Se déconnecter...");
+      window.location = "/login";
+    }
+  };
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
@@ -28,6 +34,7 @@ class LongMenu extends React.Component {
     return (
       <div>
         <IconButton
+          color="inherit"
           aria-label="More"
           aria-owns={open ? "long-menu" : undefined}
           aria-haspopup="true"
@@ -40,18 +47,17 @@ class LongMenu extends React.Component {
           anchorEl={anchorEl}
           open={open}
           onClose={this.handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200
-            }
-          }}
+          PaperProps={{ style: { maxHeight: ITEM_HEIGHT * 4.5, width: 200 } }}
         >
-          {options.map(option => (
-            <MenuItem key={option} onClick={this.handleClose}>
-              {option}
-            </MenuItem>
-          ))}
+          <MenuItem key={options[0]} onClick={this.handleClose}>
+            {options[0]}
+          </MenuItem>
+          <MenuItem key={options[1]} onClick={this.handleClose}>
+            {options[1]}
+          </MenuItem>
+          <MenuItem key={options[2]} onClick={e => this.logout(e)}>
+            {options[2]}
+          </MenuItem>
         </Menu>
       </div>
     );
