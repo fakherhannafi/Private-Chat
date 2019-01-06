@@ -1,5 +1,4 @@
 const MessageSchema = require('../models/Message.js');
-const mongoose = require('mongoose');
 
 var Message = null;
 

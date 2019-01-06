@@ -1,15 +1,14 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import axios from 'axios';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import axios from "axios";
 
 class Login extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -20,10 +19,12 @@ class Login extends React.Component {
   }
   componentWillMount = () => {
     console.log("componentWillMount()");
-    var retrievedObject = sessionStorage.getItem('userInfo');
-    if(retrievedObject != null) {
-      window.alert(retrievedObject + '\nVous êtes connecté et redirigé vers la salle de discussion ...');
-      window.location = '/chatroom';
+    var retrievedObject = sessionStorage.getItem("userInfo");
+    if (retrievedObject != null) {
+      window.alert(
+        "\nVous êtes connecté et redirigé vers la salle de discussion ..."
+      );
+      window.location = "/chatroom";
     }
   };
   handleChange = name => event => {
@@ -36,61 +37,66 @@ class Login extends React.Component {
   toggleLogin = e => {
     const _self = this;
     // Math.random().toString(36).substr(2, 5);
-    axios.post('/user/login', {
-      username: this.state.field_user,
-      password: this.state.field_pass,
-      updateTime: Date.now()
-    })
-    .then(function (res) {
-      if(res.data != 'not found') { // no error
+    axios
+      .post("/user/login", {
+        username: this.state.field_user,
+        password: this.state.field_pass,
+        updateTime: Date.now()
+      })
+      .then(function(res) {
+        if (res.data != "not found") {
+          // no error
 
-        sessionStorage.clear(); // clear old data
-        var userInfo = { 'username': _self.state.field_user, 
-          'password': _self.state.field_pass};
-        sessionStorage.setItem('userInfo', JSON.stringify( userInfo ));
-        // var retrievedObject = sessionStorage.getItem('userInfo');
-        // console.log('retrievedObject: ', JSON.parse(retrievedObject));
+          sessionStorage.clear(); // clear old data
+          var userInfo = {
+            username: _self.state.field_user,
+            password: _self.state.field_pass
+          };
+          sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+          // var retrievedObject = sessionStorage.getItem('userInfo');
+          // console.log('retrievedObject: ', JSON.parse(retrievedObject));
 
-        window.alert(userInfo['username'] + ': La connexion est réussie!');
-        window.location = '/chatroom';
-      } else { // _message is ERROR message, error occurs!
-        console.log(res.data);
-        window.alert(res.data);
-        _self.setState({
-          error: true,
-          field_user: "",
-          field_pass: ""
-        });
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-    
-
+          window.alert(userInfo["username"] + ": La connexion est réussie!");
+          window.location = "/chatroom";
+        } else {
+          // _message is ERROR message, error occurs!
+          console.log(res.data);
+          window.alert(res.data);
+          _self.setState({
+            error: true,
+            field_user: "",
+            field_pass: ""
+          });
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   signUpPage = e => {
-    axios.get('/redirect?page=signup')
-    .then(function (res) {
-      console.log(res);
-      window.location = '/signup';
-    })
-    .catch(function (error) {
-      console.log(error);
-    });  
-  }
+    axios
+      .get("/redirect?page=signup")
+      .then(function(res) {
+        console.log(res);
+        window.location = "/signup";
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
-      <Dialog 
-        open 
+      <Dialog
+        open
         onRequestClose={this.toggleLogin}
-        fullScreen={this.props.fullScreen}>
+        fullScreen={this.props.fullScreen}
+      >
         <DialogTitle>Connexion</DialogTitle>
         <DialogContent>
           <DialogContentText>
-          Veuillez entrer votre pseudo et votre mot de passe
+            Veuillez entrer votre pseudo et votre mot de passe
           </DialogContentText>
           <TextField
             autoFocus
@@ -100,7 +106,7 @@ class Login extends React.Component {
             label="Surnom"
             type="username"
             value={this.state.field_user}
-            onChange={this.handleChange('field_user')}
+            onChange={this.handleChange("field_user")}
             fullWidth
           />
           <TextField
@@ -111,16 +117,16 @@ class Login extends React.Component {
             label="Mot de passe"
             type="password"
             value={this.state.field_pass}
-            onChange={this.handleChange('field_pass')}
+            onChange={this.handleChange("field_pass")}
             fullWidth
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={this.signUpPage} color="secondary">
-          Inscription
+            Inscription
           </Button>
           <Button onClick={this.toggleLogin} color="primary">
-          Login
+            Login
           </Button>
         </DialogActions>
       </Dialog>
