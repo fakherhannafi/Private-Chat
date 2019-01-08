@@ -5,7 +5,8 @@ var io = require("socket.io")(http);
 var path = require("path");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
-const con = mongoose.createConnection("mongodb://localhost/messagedb");
+var config = require("./config.json");
+const con = mongoose.createConnection(config.mongoUrl);
 
 const UserSocket = require("./src/socket/UserSocket.js");
 const userSocket = new UserSocket(con);
@@ -13,8 +14,6 @@ const MsgSocket = require("./src/socket/MessageSocket.js");
 const msgSocket = new MsgSocket(con);
 
 const openBrowsers = require("open-browsers");
-
-const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -127,10 +126,10 @@ io.on("connection", socket => {
   });
 });
 
-http.listen(port, function(err) {
+http.listen(config.port, function(err) {
   if (err) {
     console.log(err);
   }
-  openBrowsers("http://localhost:" + port + "/");
-  console.log("Server listening on port " + port);
+  openBrowsers("http://localhost:" + config.port + "/");
+  console.log("Server listening on port " + config.port);
 });

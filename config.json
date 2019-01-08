@@ -1,0 +1,4 @@
+{
+  "mongoUrl": "mongodb://localhost/messagedb",
+  "port": "3000"
+}
