@@ -6,7 +6,10 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var config = require("./config.json");
-const con = mongoose.createConnection(config.mongoUrl);
+const con = mongoose.createConnection(config.mongoUrl, {
+  useNewUrlParser: true,
+  useCreateIndex: true
+});
 
 const UserSocket = require("./src/socket/UserSocket.js");
 const userSocket = new UserSocket(con);
@@ -70,6 +73,17 @@ app.get("/user/myicon", function(req, res) {
   userSocket.sendIcon(me, res);
 });
 
+app.get("/user/me", function(req, res) {
+  const me = req.query.username;
+  userSocket.sendThisUser(me, res);
+});
+
+app.post("/user/updateProfile", function(req, res) {
+  const me = req.query.username;
+  userSocket.updateThisUser(me, res);
+  console.log("update user to database");
+});
+
 app.get("/user/allusers", function(req, res) {
   const me = req.query.username;
   userSocket.loadFriendList(me, res);
@@ -131,5 +145,5 @@ http.listen(config.port, function(err) {
     console.log(err);
   }
   openBrowsers("http://localhost:" + config.port + "/");
-  console.log("Server listening on port " + config.port);
+  console.log(`Server listening on port ${config.port}`);
 });

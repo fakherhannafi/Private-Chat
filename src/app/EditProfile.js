@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from "axios";
+import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -16,11 +18,30 @@ const styles = {
 class EditProfile extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { user: {} };
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      id: ""
+    };
+    this.props.user = sessionStorage.getItem("userInfo");
+    this.state.name = this.props.user.username;
   }
   componentWillMount = () => {
-    console.log(this.props);
+    //console.log(this.props.user);
+
+    axios
+      .get("/user/myicon", {
+        params: {
+          username: this.props.user.username
+        }
+      })
+      .then(res => {
+        this.props.user.icon = res["data"]["icon"];
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   handleChange(field, e) {
@@ -33,10 +54,25 @@ class EditProfile extends Component {
   onSubmit() {
     this.props.update(this.state.user);
   }
+  updateProfile() {
+    axios
+      .post("/user/profile", {
+        username: this.props.user.username,
+        icon: this.props.user.icon,
+        updateTime: Date()
+      })
+      .then(function(res) {
+        if (res.data._message == null) {
+          // no error
+        } else {
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
 
   render() {
-    const { user } = this.props;
-
     return (
       <div className="settings-page">
         <div className="container page">
@@ -51,8 +87,8 @@ class EditProfile extends Component {
                     type="text"
                     placeholder="URL of profile picture"
                     onChange={this.handleChange.bind(this, "image")}
-                    defaultValue={user.image}
                   />
+                  //defaultValue={this.props.user.username}
                 </fieldset>
                 <fieldset className="form-group">
                   <input
@@ -60,8 +96,8 @@ class EditProfile extends Component {
                     type="text"
                     placeholder="Username"
                     onChange={this.handleChange.bind(this, "username")}
-                    defaultValue={user.username}
                   />
+                  //defaultValue={this.props.user.password}
                 </fieldset>
                 <fieldset className="form-group">
                   <textarea
@@ -69,8 +105,8 @@ class EditProfile extends Component {
                     rows="8"
                     placeholder="Short bio about you"
                     onChange={this.handleChange.bind(this, "bio")}
-                    defaultValue={user.bio}
                   />
+                  //defaultValue={this.props.user.username}
                 </fieldset>
                 <fieldset className="form-group">
                   <input
@@ -78,15 +114,16 @@ class EditProfile extends Component {
                     type="text"
                     placeholder="Email"
                     onChange={this.handleChange.bind(this, "email")}
-                    defaultValue={user.email}
                   />
+                  //defaultValue={this.props.user.username}
                 </fieldset>
-                <button
+                <Button
                   className="btn btn-lg btn-primary pull-xs-right"
                   type="submit"
+                  onClick={this.updateProfile}
                 >
                   Update Profile
-                </button>
+                </Button>
               </form>
             </div>
           </div>

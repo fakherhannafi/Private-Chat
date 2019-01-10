@@ -1,15 +1,15 @@
-import React from 'react';
-import {render} from 'react-dom';
-import ChatGridLayout from './ChatGridLayout';
+import React from "react";
+import { render } from "react-dom";
+import ChatGridLayout from "./ChatGridLayout";
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
   render() {
-    return (<ChatGridLayout></ChatGridLayout>);
+    return <ChatGridLayout />;
   }
 }
 
-render (<App/>, document.getElementById('app'));
+render(<App />, document.getElementById("app"));

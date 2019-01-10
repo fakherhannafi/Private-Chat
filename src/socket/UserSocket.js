@@ -14,6 +14,7 @@ class UserSocket {
       icon: data.icon,
       updateTime: data.updateTime
     });
+
     newUser.save(function(err, data) {
       console.log(data);
       if (err) {
@@ -59,6 +60,27 @@ class UserSocket {
       res.send(icon);
     });
   }
+  /********* */
+  sendThisUser(me, res) {
+    User.find({ username: me }, function(err, myUser) {
+      res.send(myUser);
+    });
+  }
+
+  updateThisUser(me, res) {
+    User.findOneAndUpdate(
+      { username: me },
+      { $set: { icon: "./assets/default.png" } },
+      function(err, updatedUser) {
+        if (err) {
+          console.log("Something wrong when updating data!");
+        }
+        console.log(updatedUser);
+        res.send("succeeded");
+      }
+    );
+  }
+
   /*********** */
   loadFriendList(me, res) {
     User.find({}, function(err, users) {
@@ -81,8 +103,6 @@ class UserSocket {
     });
   }
   /*********** */
-
-  uploadProfilePic() {}
 }
 
 module.exports = UserSocket;

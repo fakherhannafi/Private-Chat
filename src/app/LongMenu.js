@@ -6,7 +6,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const options = ["Modifier Profil", "Sécurité", "Déconnexion"];
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 40;
 
 class LongMenu extends React.Component {
   constructor(props) {
@@ -16,9 +16,7 @@ class LongMenu extends React.Component {
   state = {
     anchorEl: null
   };
-  componentWillMount = () => {
-    console.log(this.props);
-  };
+  componentWillMount = () => {};
 
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
